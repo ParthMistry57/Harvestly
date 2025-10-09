@@ -1,0 +1,162 @@
+﻿@model IEnumerable<Harvestly.Models.MenuItem>
+@{
+    ViewBag.Title = "Product Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header text-center">
+                <h1><i class="fas fa-cog"></i> Product Management</h1>
+                <p class="lead">Manage your farm's products and inventory</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Action Buttons -->
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="product-card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4><i class="fas fa-plus-circle"></i> Add New Product</h4>
+                            <p class="text-muted">Add a new product to your inventory</p>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            @Html.ActionLink("Create New Product", "newRecord", null, new { @class = "btn btn-primary btn-lg" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Products Table -->
+<div class="container">
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-modern">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-box"></i> Product Name</th>
+                        <th><i class="fas fa-hashtag"></i> Quantity</th>
+                        <th><i class="fas fa-pound-sign"></i> Price</th>
+                        <th><i class="fas fa-toggle-on"></i> Status</th>
+                        <th><i class="fas fa-calendar"></i> Launch Date</th>
+                        <th><i class="fas fa-tags"></i> Category</th>
+                        <th><i class="fas fa-truck"></i> Delivery</th>
+                        <th><i class="fas fa-cog"></i> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@Html.DisplayFor(modelItem => item.Name)</strong>
+                            </td>
+                            <td>
+                                <span class="badge badge-info">@Html.DisplayFor(model => item.Quantity)</span>
+                            </td>
+                            <td>
+                                <strong class="price">£@Html.DisplayFor(modelItem => item.Price)</strong>
+                            </td>
+                            <td>
+                                @if (item.Active)
+                                {
+                                    <span class="badge badge-success"><i class="fas fa-check"></i> Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger"><i class="fas fa-times"></i> Inactive</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.dateOfLaunch)
+                            </td>
+                            <td>
+                                <span class="badge badge-secondary">@Html.DisplayFor(modelItem => item.Category.Name)</span>
+                            </td>
+                            <td>
+                                @if (item.freeDelivery)
+                                {
+                                    <span class="text-success"><i class="fas fa-check"></i> Free</span>
+                                }
+                                else
+                                {
+                                    <span class="text-warning"><i class="fas fa-times"></i> Paid</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    @Html.ActionLink("Edit", "updateRecord", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" })
+                                    @Html.ActionLink("Delete", "deleteRecord", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <!-- Empty State -->
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+                <div class="product-card">
+                    <div class="card-body">
+                        <i class="fas fa-box-open fa-4x text-muted mb-4"></i>
+                        <h3>No Products Found</h3>
+                        <p class="text-muted">You haven't added any products yet. Start by adding your first product!</p>
+                        @Html.ActionLink("Add Your First Product", "newRecord", null, new { @class = "btn btn-primary btn-lg" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Quick Stats -->
+@if (Model.Any())
+{
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="product-card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-box fa-3x text-primary mb-3"></i>
+                        <h3>@Model.Count()</h3>
+                        <p class="text-muted">Total Products</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="product-card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                        <h3>@Model.Count(m => m.Active)</h3>
+                        <p class="text-muted">Active Products</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="product-card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-truck fa-3x text-info mb-3"></i>
+                        <h3>@Model.Count(m => m.freeDelivery)</h3>
+                        <p class="text-muted">Free Delivery</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

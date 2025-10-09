@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Harvestly</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top custom-navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                    <i class="fas fa-seedling"></i> Harvestly
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="@Url.Action("Index", "Home")"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="@Url.Action("Indexes", "Cart")"><i class="fas fa-shopping-bag"></i> Products</a></li>
+                    <li><a href="@Url.Action("ViewCart", "Cart")"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                    <li><a href="@Url.Action("AdminIndex", "Home")"><i class="fas fa-cog"></i> Admin</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5><i class="fas fa-seedling"></i> Harvestly</h5>
+                    <p>Fresh produce delivered directly from local farms to your doorstep. Supporting local farmers and providing you with the freshest, highest quality products.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li><a href="@Url.Action("Indexes", "Cart")">Products</a></li>
+                        <li><a href="@Url.Action("ViewCart", "Cart")">Shopping Cart</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Info</h5>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@harvestly.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Farm Road, Green Valley</p>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; @DateTime.Now.Year Harvestly. All rights reserved. | Fresh. Local. Sustainable.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>

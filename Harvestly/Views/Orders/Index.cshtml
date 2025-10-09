@@ -1,0 +1,159 @@
+﻿@model IEnumerable<Harvestly.Models.Order>
+@{
+    ViewBag.Title = "Order Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header text-center">
+                <h1><i class="fas fa-shopping-cart"></i> Order Management</h1>
+                <p class="lead">Track and manage all customer orders</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Action Buttons -->
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="product-card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4><i class="fas fa-plus-circle"></i> Create New Order</h4>
+                            <p class="text-muted">Add a new order manually</p>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            @Html.ActionLink("Create New Order", "Create", null, new { @class = "btn btn-primary btn-lg" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Orders List -->
+<div class="container">
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-modern">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-hashtag"></i> Order ID</th>
+                        <th><i class="fas fa-calendar"></i> Order Date</th>
+                        <th><i class="fas fa-user"></i> Customer</th>
+                        <th><i class="fas fa-map-marker-alt"></i> Location</th>
+                        <th><i class="fas fa-pound-sign"></i> Total</th>
+                        <th><i class="fas fa-truck"></i> Status</th>
+                        <th><i class="fas fa-cog"></i> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>#@Html.DisplayFor(modelItem => item.OrderId)</strong>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrderDate)
+                            </td>
+                            <td>
+                                <strong>@Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)</strong>
+                                <br>
+                                <small class="text-muted">@Html.DisplayFor(modelItem => item.Email)</small>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.City), @Html.DisplayFor(modelItem => item.State)
+                                <br>
+                                <small class="text-muted">@Html.DisplayFor(modelItem => item.Country)</small>
+                            </td>
+                            <td>
+                                <strong class="price">£@Html.DisplayFor(modelItem => item.Total)</strong>
+                            </td>
+                            <td>
+                                @if (item.HasBeenShipped)
+                                {
+                                    <span class="badge badge-success"><i class="fas fa-check"></i> Shipped</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning"><i class="fas fa-clock"></i> Pending</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    @Html.ActionLink("View", "Details", new { id = item.OrderId }, new { @class = "btn btn-info btn-sm" })
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.OrderId }, new { @class = "btn btn-warning btn-sm" })
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.OrderId }, new { @class = "btn btn-danger btn-sm" })
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Order Statistics -->
+        <div class="row mt-5">
+            <div class="col-md-3">
+                <div class="product-card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-shopping-cart fa-3x text-primary mb-3"></i>
+                        <h3>@Model.Count()</h3>
+                        <p class="text-muted">Total Orders</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="product-card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                        <h3>@Model.Count(m => m.HasBeenShipped)</h3>
+                        <p class="text-muted">Shipped Orders</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="product-card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-clock fa-3x text-warning mb-3"></i>
+                        <h3>@Model.Count(m => !m.HasBeenShipped)</h3>
+                        <p class="text-muted">Pending Orders</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="product-card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-pound-sign fa-3x text-info mb-3"></i>
+                        <h3>£@Model.Sum(m => m.Total).ToString("N0")</h3>
+                        <p class="text-muted">Total Revenue</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Empty State -->
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+                <div class="product-card">
+                    <div class="card-body">
+                        <i class="fas fa-shopping-cart fa-4x text-muted mb-4"></i>
+                        <h3>No Orders Found</h3>
+                        <p class="text-muted">No orders have been placed yet. Orders will appear here once customers start shopping!</p>
+                        @Html.ActionLink("Create First Order", "Create", null, new { @class = "btn btn-primary btn-lg" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

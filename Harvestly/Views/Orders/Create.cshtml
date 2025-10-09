@@ -1,0 +1,138 @@
+﻿@model Harvestly.Models.Order
+
+@{
+    ViewBag.Title = "Create New Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header text-center">
+                <h1><i class="fas fa-plus-circle"></i> Create New Order</h1>
+                <p class="lead">Add a new order to the system</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Order Form -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="product-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-shopping-cart"></i> Order Information</h3>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                        <!-- Order Details -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.OrderDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.OrderDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customer Information -->
+                        <h4 class="mb-3"><i class="fas fa-user"></i> Customer Information</h4>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Address -->
+                        <h4 class="mb-3"><i class="fas fa-map-marker-alt"></i> Shipping Address</h4>
+                        <div class="form-group mb-3">
+                            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label" })
+                                    @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save"></i> Create Order
+                            </button>
+                            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-outline-secondary btn-lg" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

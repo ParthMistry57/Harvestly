@@ -1,0 +1,155 @@
+﻿
+@model IEnumerable<Harvestly.Models.Cart>
+
+@{
+    ViewBag.Title = "Shopping Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Page Header -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header text-center">
+                <h1><i class="fas fa-shopping-cart"></i> Shopping Cart</h1>
+                <p class="lead">Review your selected items before checkout</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cart Items -->
+<div class="container">
+    @{ double Total = 0;}
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-modern">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-box"></i> Product</th>
+                        <th><i class="fas fa-hashtag"></i> Quantity</th>
+                        <th><i class="fas fa-truck"></i> Delivery</th>
+                        <th><i class="fas fa-pound-sign"></i> Price</th>
+                        <th><i class="fas fa-cog"></i> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@Html.DisplayFor(modelItem => item.MenuItem.Name)</strong>
+                                <br>
+                                <small class="text-muted">@Html.DisplayFor(modelItem => item.MenuItem.Category.Name)</small>
+                            </td>
+                            <td>
+                                <span class="badge badge-info">@Html.DisplayFor(model => item.MenuItem.Quantity)</span>
+                            </td>
+                            <td>
+                                @if (item.MenuItem.freeDelivery)
+                                {
+                                    <span class="text-success"><i class="fas fa-check"></i> Free</span>
+                                }
+                                else
+                                {
+                                    <span class="text-warning"><i class="fas fa-times"></i> Paid</span>
+                                }
+                            </td>
+                            <td>
+                                <strong class="price">£@Html.DisplayFor(modelItem => item.MenuItem.Price)</strong>
+                                @{Total += item.MenuItem.Price;}
+                            </td>
+                            <td>
+                                @Html.ActionLink("Remove", "Delete", new { cartId = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="product-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Subtotal:</strong>
+                            </div>
+                            <div class="col-6 text-right">
+                                <strong>£@Total</strong>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Total:</strong>
+                            </div>
+                            <div class="col-6 text-right">
+                                <strong class="text-success" style="font-size: 1.2rem;">£@Total</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="product-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-credit-card"></i> Checkout</h3>
+                    </div>
+                    <div class="card-body text-center">
+                        @if (Total < 1000)
+                        {
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle"></i> Order eligible for checkout!
+                            </div>
+                            <p class="text-muted">Thank you for shopping with us!</p>
+                            <p class="text-muted">Please proceed with your payment.</p>
+                            @Html.ActionLink("Proceed to Checkout", "Checkout", null, new { @class = "btn btn-success btn-lg" })
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle"></i> Order limit exceeded
+                            </div>
+                            <p class="text-muted">Please keep your order under £1000.</p>
+                            <p class="text-muted">Current total: £@Total</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Empty Cart -->
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+                <div class="product-card">
+                    <div class="card-body">
+                        <i class="fas fa-shopping-cart fa-4x text-muted mb-4"></i>
+                        <h3>Your cart is empty</h3>
+                        <p class="text-muted">Add some fresh products to get started!</p>
+                        <a href="@Url.Action("Indexes", "Cart")" class="btn btn-primary btn-lg">
+                            <i class="fas fa-shopping-bag"></i> Start Shopping
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Continue Shopping -->
+    <div class="row mt-4">
+        <div class="col-lg-12 text-center">
+            <a href="@Url.Action("Indexes", "Cart")" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left"></i> Continue Shopping
+            </a>
+        </div>
+    </div>
+</div>

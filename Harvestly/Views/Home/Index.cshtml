@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Harvestly.Models.MenuItem>
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+                <h1><i class="fas fa-seedling"></i> Welcome to Harvestly</h1>
+                <p class="lead">Fresh, organic produce delivered directly from local farms to your doorstep</p>
+                <div class="hero-buttons">
+                    <a href="@Url.Action("Indexes", "Cart")" class="btn-hero">
+                        <i class="fas fa-shopping-bag"></i> Shop Now
+                    </a>
+                    <a href="@Url.Action("AdminIndex", "Home")" class="btn-hero secondary">
+                        <i class="fas fa-user-tie"></i> For Farmers
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Action Section -->
+<section class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 text-center">
+            <div class="product-card">
+                <div class="card-body" style="padding: 60px 40px;">
+                    <h2 class="mb-4">Choose Your Path</h2>
+                    <p class="lead mb-5">Whether you're looking for fresh produce or managing your farm's products, we've got you covered.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="text-center">
+                                <i class="fas fa-shopping-bag fa-4x text-success mb-3"></i>
+                                <h3>Shop Fresh Products</h3>
+                                <p class="text-muted mb-4">Browse our wide selection of fresh, organic produce from local farms.</p>
+                                <a href="@Url.Action("Indexes", "Cart")" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-shopping-cart"></i> Start Shopping
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="text-center">
+                                <i class="fas fa-user-tie fa-4x text-primary mb-3"></i>
+                                <h3>For Farmers</h3>
+                                <p class="text-muted mb-4">Manage your products and reach more customers through our platform.</p>
+                                <a href="@Url.Action("AdminIndex", "Home")" class="btn btn-success btn-lg">
+                                    <i class="fas fa-cog"></i> Manage Products
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
