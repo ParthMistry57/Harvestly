@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Harvestly.Models;
+using Harvestly.Filters;
 
 namespace Harvestly.Controllers
 {
@@ -24,29 +25,26 @@ namespace Harvestly.Controllers
             exceptionContext.ExceptionHandled = true;
 
         }
-        public ActionResult AdminValidation(bool isAdmin = false)
-        {
-            if (isAdmin == true)
-                return RedirectToAction("AdminIndex");
-            else
-                return View();
-        }
         public ActionResult Index()
         {
             return View();
         }
+
+        [AuthorizeAdminOrFarmer]
         public ActionResult AdminIndex()
         {
             var menuItemList = (from m in db.MenuItems.Include("Category") select m).ToList();
             return View(menuItemList);
         }
 
+        [AuthorizeAdminOrFarmer]
         public ActionResult newRecord()
         {
             ViewBag.CategoryList = new SelectList(db.Categories.ToList(), "Id", "Name");
             return View();
         }
         [HttpPost]
+        [AuthorizeAdminOrFarmer]
         public ActionResult newRecord(MenuItem menuItem)
         {
             if (!ModelState.IsValid)
@@ -58,6 +56,7 @@ namespace Harvestly.Controllers
             db.SaveChanges();
             return RedirectToAction("AdminIndex", "Home");
         }
+        [AuthorizeAdminOrFarmer]
         public ActionResult deleteRecord(int? id)
         {
             MenuItem record = db.MenuItems.Where(k => k.Id == id).SingleOrDefault();
@@ -66,6 +65,7 @@ namespace Harvestly.Controllers
             return RedirectToAction("AdminIndex");
         }
 
+        [AuthorizeAdminOrFarmer]
         public ActionResult updateRecord(int id)
         {
             MenuItem menuItem = new MenuItem();
@@ -79,6 +79,7 @@ namespace Harvestly.Controllers
       
 
         [HttpPost]
+        [AuthorizeAdminOrFarmer]
         public ActionResult updateRecord(MenuItem menuItem)
         {
             if (!ModelState.IsValid)

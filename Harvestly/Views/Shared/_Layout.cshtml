@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
-<body>
+<body class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "home-page" : "")">
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top custom-navbar">
         <div class="container">
@@ -30,7 +30,23 @@
                     <li><a href="@Url.Action("Index", "Home")"><i class="fas fa-home"></i> Home</a></li>
                     <li><a href="@Url.Action("Indexes", "Cart")"><i class="fas fa-shopping-bag"></i> Products</a></li>
                     <li><a href="@Url.Action("ViewCart", "Cart")"><i class="fas fa-shopping-cart"></i> Cart</a></li>
-                    <li><a href="@Url.Action("AdminIndex", "Home")"><i class="fas fa-cog"></i> Admin</a></li>
+                    @if (Harvestly.Helpers.SessionHelper.IsAuthenticated())
+                    {
+                        <li><a href="@Url.Action("AdminIndex", "Home")"><i class="fas fa-cog"></i> Admin</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user"></i> @Harvestly.Helpers.SessionHelper.GetUsername() <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("Logout", "Account")"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="@Url.Action("Logout", "Account")" class="text-danger"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("Login", "Account")"><i class="fas fa-sign-in-alt"></i> Admin Login</a></li>
+                    }
                 </ul>
             </div>
         </div>

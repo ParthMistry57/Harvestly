@@ -161,15 +161,15 @@
 
     <!-- Action Buttons -->
     <div class="row mt-4">
-        <div class="col-lg-12 text-center">
+        <div class="col-lg-12">
             <div class="product-card">
                 <div class="card-body">
                     <h4><i class="fas fa-cog"></i> Order Actions</h4>
                     <p class="text-muted">Manage this order</p>
-                    <div class="btn-group" role="group">
-                        @Html.ActionLink("Edit Order", "Edit", new { id = Model.OrderId }, new { @class = "btn btn-warning btn-lg" })
-                        @Html.ActionLink("Back to Orders", "Index", null, new { @class = "btn btn-outline-primary btn-lg" })
-                        @Html.ActionLink("Delete Order", "Delete", new { id = Model.OrderId }, new { @class = "btn btn-danger btn-lg" })
+                    <div class="text-center" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                        @Html.ActionLink("Edit Order", "Edit", new { id = Model.OrderId }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Back to Orders", "Index", null, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Delete Order", "Delete", new { id = Model.OrderId }, new { @class = "btn btn-danger" })
                     </div>
                 </div>
             </div>

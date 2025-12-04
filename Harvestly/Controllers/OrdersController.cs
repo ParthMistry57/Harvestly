@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Harvestly.Models;
+using Harvestly.Helpers;
 
 namespace Harvestly.Controllers
 {
@@ -52,6 +53,20 @@ namespace Harvestly.Controllers
             {
                 db.Orders.Add(order);
                 db.SaveChanges();
+
+                // Clear the cart after order is created
+                int userId = SessionHelper.GetUserId() ?? 1;
+                var userCartItems = db.Carts.Where(c => c.userId == userId).ToList();
+                
+                if (userCartItems.Any())
+                {
+                    foreach (var cartItem in userCartItems)
+                    {
+                        db.Carts.Remove(cartItem);
+                    }
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("Index");
             }
 

@@ -1,0 +1,88 @@
+@model IEnumerable<Harvestly.Models.User>
+@{
+    ViewBag.Title = "Manage Farmers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h1><i class="fas fa-users"></i> Manage Farmers</h1>
+                <p class="lead">Create and manage farmer accounts</p>
+            </div>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="fas fa-check-circle"></i> @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            @Html.ActionLink("Create New Farmer Account", "CreateFarmer", "Account", null, new { @class = "btn btn-primary btn-lg" })
+        </div>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-modern">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-user"></i> Username</th>
+                        <th><i class="fas fa-id-card"></i> Full Name</th>
+                        <th><i class="fas fa-envelope"></i> Email</th>
+                        <th><i class="fas fa-calendar"></i> Created Date</th>
+                        <th><i class="fas fa-toggle-on"></i> Status</th>
+                        <th><i class="fas fa-cog"></i> Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var farmer in Model)
+                    {
+                        <tr>
+                            <td><strong>@farmer.Username</strong></td>
+                            <td>@(farmer.FullName ?? "N/A")</td>
+                            <td>@(farmer.Email ?? "N/A")</td>
+                            <td>@farmer.CreatedDate.ToString("MM/dd/yyyy")</td>
+                            <td>
+                                @if (farmer.IsActive)
+                                {
+                                    <span class="badge badge-success"><i class="fas fa-check"></i> Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger"><i class="fas fa-times"></i> Inactive</span>
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Delete", "DeleteFarmer", "Account", new { id = farmer.Id }, new { @class = "btn btn-danger btn-sm" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+                <div class="product-card">
+                    <div class="card-body">
+                        <i class="fas fa-users fa-4x text-muted mb-4"></i>
+                        <h3>No Farmers Found</h3>
+                        <p class="text-muted">You haven't created any farmer accounts yet.</p>
+                        @Html.ActionLink("Create First Farmer Account", "CreateFarmer", "Account", null, new { @class = "btn btn-primary btn-lg" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

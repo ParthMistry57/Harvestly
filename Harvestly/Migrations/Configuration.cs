@@ -5,6 +5,7 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
     using Harvestly.Models;
+    using Harvestly.Helpers;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Harvestly.Models.HarvestlyContext>
     {
@@ -30,6 +31,24 @@
                 new Category { Name = "Grains" },
                 new Category { Name = "Meat" }
             );
+
+            // Create default admin user if it doesn't exist
+            if (!context.Users.Any(u => u.Username == "admin"))
+            {
+                context.Users.AddOrUpdate(
+                    u => u.Username,
+                    new User
+                    {
+                        Username = "admin",
+                        PasswordHash = PasswordHelper.HashPassword("admin123"), // Default password: admin123
+                        Role = UserRole.Admin,
+                        Email = "admin@harvestly.com",
+                        FullName = "System Administrator",
+                        CreatedDate = DateTime.Now,
+                        IsActive = true
+                    }
+                );
+            }
             
             context.SaveChanges();
         }
