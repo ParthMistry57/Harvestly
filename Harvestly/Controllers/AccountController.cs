@@ -13,9 +13,10 @@ namespace Harvestly.Controllers
         private HarvestlyContext db = new HarvestlyContext();
 
         // GET: Account/Login
-        public ActionResult Login(string returnUrl = null)
+        public ActionResult Login(string returnUrl = null, string loginType = null)
         {
             ViewBag.ReturnUrl = returnUrl;
+            ViewBag.LoginType = loginType;
             return View();
         }
 

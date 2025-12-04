@@ -13,7 +13,15 @@ namespace Harvestly.Filters
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            filterContext.Result = new RedirectResult("~/Account/Login?returnUrl=" + HttpUtility.UrlEncode(filterContext.HttpContext.Request.RawUrl));
+            // Check if the request is for AdminIndex (farmer-related page)
+            string loginType = filterContext.HttpContext.Request.RawUrl.Contains("AdminIndex") ? "farmer" : null;
+            string returnUrl = HttpUtility.UrlEncode(filterContext.HttpContext.Request.RawUrl);
+            string loginUrl = "~/Account/Login?returnUrl=" + returnUrl;
+            if (!string.IsNullOrEmpty(loginType))
+            {
+                loginUrl += "&loginType=" + loginType;
+            }
+            filterContext.Result = new RedirectResult(loginUrl);
         }
     }
 }
